@@ -5,11 +5,12 @@
   "description": "it takes screenshots maybe",
   "main": ".webpack/main",
   "scripts": {
-    "start": "electron-forge start",
+    "dev": "electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
-    "lint": "eslint --ext .ts ."
+    "lint": "eslint --ext .ts .",
+    "format": "prettier --write . --ignore .webpack"
   },
   "keywords": [],
   "license": "MIT",
@@ -71,9 +72,11 @@
     "css-loader": "^3.0.0",
     "electron": "9.0.0",
     "eslint": "^6.8.0",
+    "eslint-config-prettier": "6.11.0",
     "eslint-plugin-import": "^2.20.0",
     "fork-ts-checker-webpack-plugin": "^3.1.1",
     "node-loader": "^0.6.0",
+    "prettier": "2.0.5",
     "style-loader": "^0.23.1",
     "ts-loader": "^6.2.1",
     "typescript": "^3.7.0"
