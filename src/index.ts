@@ -1,11 +1,12 @@
 import { app, BrowserWindow } from "electron"
+
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string
 
 if (require("electron-squirrel-startup")) {
   app.quit()
 }
 
-function createWindow() {
+function createMainWindow() {
   const mainWindow = new BrowserWindow({
     height: 600,
     width: 800,
@@ -19,8 +20,4 @@ function createWindow() {
   }
 }
 
-app.on("ready", createWindow)
-
-app.on("window-all-closed", () => {
-  app.quit()
-})
+app.on("ready", createMainWindow)
