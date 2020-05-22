@@ -1,20 +1,28 @@
-import { app, BrowserWindow } from "electron"
+import { app, BrowserWindow, dialog } from "electron"
+import { getErrorMessage } from "./helpers"
 
 const isDev = process.argv.includes("--dev")
 
 let editorWindow: BrowserWindow | undefined
 
-function createEditorWindow() {
+async function createEditorWindow() {
   const win = (editorWindow = new BrowserWindow({
     height: 600,
     width: 800,
     webPreferences: { nodeIntegration: true, webSecurity: false },
   }))
 
-  if (isDev) {
-    win.loadURL("http://localhost:3000/editor/view.html")
-  } else {
-    win.loadFile("./editor/view.html")
+  try {
+    if (isDev) {
+      await win.loadURL("http://localhost:3000/editor.html")
+    } else {
+      await win.loadFile("../assets/editor.html")
+    }
+  } catch (error) {
+    dialog.showErrorBox(
+      "Failed to create editor window",
+      getErrorMessage(error),
+    )
   }
 
   if (isDev) {

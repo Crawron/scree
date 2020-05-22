@@ -2,6 +2,7 @@ import * as datefns from "date-fns"
 import { desktopCapturer, remote, Size } from "electron"
 import { promises as fs } from "fs"
 import { join } from "path"
+import { getErrorMessage } from "./helpers"
 
 async function captureFullScreen() {
   try {
@@ -32,7 +33,7 @@ async function captureFullScreen() {
   } catch (error) {
     remote.dialog.showErrorBox(
       "Could not capture screenshot",
-      error instanceof Error ? error.message : String(error),
+      getErrorMessage(error),
     )
   }
 }
