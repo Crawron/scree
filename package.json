@@ -1,6 +1,5 @@
 {
   "name": "screeditor",
-  "productName": "screeditor",
   "version": "1.0.0",
   "description": "it takes screenshots maybe",
   "main": "build/main.js",
