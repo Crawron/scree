@@ -9,8 +9,9 @@
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
-    "lint": "eslint --ext .ts .",
-    "format": "prettier --write . --ignore .webpack"
+    "lint": "eslint --ext js,ts,tsx .",
+    "format": "prettier --write .",
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
     "@electron-forge/cli": "6.0.0-beta.51",
