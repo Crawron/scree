@@ -20,7 +20,6 @@ function createMainWindow() {
   }
 }
 
-
 ipcMain.on("open-image", async (event, path) => {
   if (typeof path !== "string") return
 
