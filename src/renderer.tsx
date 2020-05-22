@@ -1,10 +1,12 @@
-import "./index.css"
+import "./hotkeys"
 
 import React, { useState, useRef, useEffect } from "react"
 import ReactDOM from "react-dom"
 
 import { remote, ipcRenderer } from "electron"
 const { dialog } = remote
+
+import "./index.css"
 
 const App = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)

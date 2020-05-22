@@ -11,10 +11,7 @@
     "outDir": "dist",
     "jsx": "react",
     "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "paths": {
-      "*": ["node_modules/*"]
-    }
+    "resolveJsonModule": true
   },
   "include": ["src/**/*"]
 }
