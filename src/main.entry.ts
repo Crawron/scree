@@ -1,5 +1,6 @@
-import { app, BrowserWindow } from "electron"
-import { reloadOnChanges } from "./helpers"
+import { app, BrowserWindow, ipcMain } from "electron"
+import { loadImage } from "./loadImage"
+import { reloadOnChanges } from "./reloadOnChanges"
 
 const isDev = process.argv.includes("--dev")
 
@@ -35,4 +36,11 @@ app.on("ready", () => {
   // show at startup for debugging
   // later this would be triggered by something else, probably post capture
   showEditorWindow()
+})
+
+ipcMain.on("open-image", async (event, path) => {
+  if (typeof path !== "string") return
+
+  const bitmap = await loadImage(path)
+  if (bitmap) event.reply("loaded-image", bitmap)
 })
