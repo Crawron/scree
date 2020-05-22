@@ -1,6 +1,6 @@
 import { app, BrowserWindow, ipcMain } from "electron"
-import { loadImage } from "./loadImage"
-import { reloadOnChanges } from "./reloadOnChanges"
+import { loadImage } from "./helpers/loadImage"
+import { reloadOnChanges } from "./helpers/reloadOnChanges"
 
 const isDev = process.argv.includes("--dev")
 
