@@ -10,7 +10,7 @@ const App = () => {
 
   async function selectImage() {
     console.log("loading image...")
-    dialog.showOpenDialog()
+    dialog.showOpenDialog({})
     return /*
     fileInputRef.current!.click()
 
