@@ -4,10 +4,7 @@ import ReactDOM from "react-dom"
 import "./hotkeys"
 import "./index.css"
 
-
-
 const { dialog } = remote
-
 
 const App = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
