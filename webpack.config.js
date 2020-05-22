@@ -11,6 +11,11 @@ const baseConfig = {
   resolve: {
     extensions: [".ts", ".tsx", ".js"],
   },
+  stats: {
+    entrypoints: false,
+    modules: false,
+  },
+  node: false,
 }
 
 module.exports = [
