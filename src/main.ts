@@ -1,5 +1,4 @@
-import { app, BrowserWindow, ipcMain } from "electron"
-import { loadImage } from "./loadImage"
+import { app, BrowserWindow } from "electron"
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string
 
 if (require("electron-squirrel-startup")) {
@@ -20,11 +19,12 @@ function createMainWindow() {
   }
 }
 
+/* // commented until sharp doesnt break everything
 ipcMain.on("open-image", async (event, path) => {
   if (typeof path !== "string") return
 
   const bitmap = await loadImage(path)
   if (bitmap) event.reply("loaded-image", bitmap)
-})
+})*/
 
 app.on("ready", createMainWindow)
