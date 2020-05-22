@@ -2,7 +2,6 @@ import { ipcRenderer, remote } from "electron"
 import React, { useEffect, useRef, useState } from "react"
 import ReactDOM from "react-dom"
 import "./hotkeys"
-import "./index.css"
 
 const { dialog } = remote
 
