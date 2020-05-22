@@ -11,7 +11,7 @@ function createEditorWindow() {
     webPreferences: { nodeIntegration: true, webSecurity: false },
   }))
 
-  win.loadURL(isDev ? "http://localhost:3000" : "file://editor.html")
+  win.loadURL(isDev ? "http://localhost:3000" : "file://editor/view.html")
 
   if (isDev) {
     win.webContents.openDevTools()
