@@ -1,37 +1,37 @@
-import { remote } from "electron"
-import React, { useRef } from "react"
-import ReactDOM from "react-dom"
 import "./index.css"
+
+import React, { useState, useRef, useEffect } from "react"
+import ReactDOM from "react-dom"
+
+import { remote, ipcRenderer } from "electron"
 const { dialog } = remote
 
 const App = () => {
-  const fileInputRef = useRef<HTMLInputElement>(null)
-  const canvas: HTMLCanvasElement | null = null
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const [path, setPath] = useState<string>("")
+
+  useEffect(() => {
+    if (!path) return
+    ipcRenderer.emit("open-image", path)
+    ipcRenderer.on("loaded-image", (event, bitmap: ImageBitmap) => {
+      const canvasCtx = canvasRef.current?.getContext("2d")
+      canvasCtx?.drawImage(bitmap, 0, 0)
+    })
+  }, [path])
 
   async function selectImage() {
-    console.log("loading image...")
-    dialog.showOpenDialog({})
-    return /*
-    fileInputRef.current!.click()
+    const dialogResult = await dialog.showOpenDialog({
+      properties: ["openFile"],
+    })
 
-    const fileBuffer = fileInputRef.current?.files?.[0]
-    if (!fileBuffer) return console.log("couldnt load image")
-
-    const imageBitmap = await createImageBitmap(fileBuffer)
-    canvas = document.createElement("canvas")
-    canvas.getContext("2d")!.drawImage(imageBitmap, 0, 0)*/
+    if (!dialogResult.canceled) setPath(dialogResult.filePaths[0])
   }
 
   return (
     <>
-      <input
-        type="file"
-        accept="image/*"
-        style={{ display: "none" }}
-        ref={fileInputRef}
-      />
+      {path ? <canvas ref={canvasRef}></canvas> : ""}
+      <br />
       <button onClick={selectImage}>Load Image</button>
-      {canvas ? canvas : ""}
     </>
   )
 }

@@ -1,4 +1,5 @@
-import { app, BrowserWindow } from "electron"
+import { app, BrowserWindow, ipcMain } from "electron"
+import { loadImage } from "./loadImage"
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -42,4 +43,11 @@ app.on("activate", () => {
   if (BrowserWindow.getAllWindows().length === 0) {
     createWindow()
   }
+})
+
+ipcMain.on("open-image", async (event, path) => {
+  if (typeof path !== "string") return
+
+  const bitmap = await loadImage(path)
+  if (bitmap) event.reply("loaded-image", bitmap)
 })
