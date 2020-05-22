@@ -1,19 +1,20 @@
 name: CI
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   typecheck:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - run: yarn run typecheck
+      - uses: actions/checkout@v2
+      - run: yarn install
+      - run: yarn run typecheck
   lint:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - run: yarn run lint
-  
+      - uses: actions/checkout@v2
+      - run: yarn install
+      - run: yarn run lint
