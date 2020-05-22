@@ -5,92 +5,35 @@
   "description": "it takes screenshots maybe",
   "main": ".webpack/main",
   "scripts": {
-    "dev": "electron-forge start",
-    "package": "electron-forge package",
-    "make": "electron-forge make",
-    "publish": "electron-forge publish",
+    "dev": "",
+    "build": "parcel build src/main.ts src/editor.html --out-dir build --target electron",
+    "start": "electron build/main.js",
     "lint": "eslint --ext js,ts,tsx .",
     "format": "prettier --write .",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "date-fns": "2.14.0",
-    "electron-squirrel-startup": "1.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "sharp": "^0.25.3"
   },
   "devDependencies": {
-    "@electron-forge/cli": "6.0.0-beta.51",
-    "@electron-forge/maker-deb": "6.0.0-beta.51",
-    "@electron-forge/maker-rpm": "6.0.0-beta.51",
-    "@electron-forge/maker-squirrel": "6.0.0-beta.51",
-    "@electron-forge/maker-zip": "6.0.0-beta.51",
-    "@electron-forge/plugin-webpack": "6.0.0-beta.51",
-    "@marshallofsound/webpack-asset-relocator-loader": "^0.5.0",
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
-    "@types/webpack-env": "1.15.2",
     "@typescript-eslint/eslint-plugin": "^2.34.0",
     "@typescript-eslint/parser": "^2.34.0",
-    "css-loader": "^3.5.3",
     "electron": "9.0.0",
     "eslint": "^7.0.0",
     "eslint-config-prettier": "6.11.0",
     "eslint-plugin-react": "7.20.0",
     "eslint-plugin-react-hooks": "4.0.2",
     "fork-ts-checker-webpack-plugin": "^4.1.4",
-    "node-loader": "^0.6.0",
+    "npm-run-all": "4.1.5",
+    "parcel-bundler": "1.12.4",
     "prettier": "2.0.5",
-    "style-loader": "^1.2.1",
-    "ts-loader": "^7.0.4",
-    "typescript": "^3.9.3"
+    "typescript": "3.9.3"
   },
   "keywords": [],
-  "license": "MIT",
-  "config": {
-    "forge": {
-      "packagerConfig": {},
-      "makers": [
-        {
-          "name": "@electron-forge/maker-squirrel",
-          "config": {
-            "name": "forge_app"
-          }
-        },
-        {
-          "name": "@electron-forge/maker-zip",
-          "platforms": [
-            "darwin"
-          ]
-        },
-        {
-          "name": "@electron-forge/maker-deb",
-          "config": {}
-        },
-        {
-          "name": "@electron-forge/maker-rpm",
-          "config": {}
-        }
-      ],
-      "plugins": [
-        [
-          "@electron-forge/plugin-webpack",
-          {
-            "mainConfig": "./webpack.main.config.js",
-            "renderer": {
-              "config": "./webpack.renderer.config.js",
-              "entryPoints": [
-                {
-                  "html": "./src/index.html",
-                  "js": "./src/renderer.tsx",
-                  "name": "main_window"
-                }
-              ]
-            }
-          }
-        ]
-      ]
-    }
-  }
+  "license": "MIT"
 }
