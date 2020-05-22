@@ -1,6 +1,7 @@
 import { remote } from "electron"
 import React, { useRef } from "react"
 import ReactDOM from "react-dom"
+import "./hotkeys"
 import "./index.css"
 const { dialog } = remote
 
