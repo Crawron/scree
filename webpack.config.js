@@ -16,6 +16,10 @@ const baseConfig = {
     modules: false,
   },
   node: false,
+  externals: {
+    // https://webpack.js.org/configuration/externals/#externals
+    sharp: "commonjs2 sharp",
+  },
 }
 
 module.exports = [
