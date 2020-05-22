@@ -82,11 +82,8 @@ typings/
 # DynamoDB Local files
 .dynamodb/
 
-# Webpack
-.webpack/
-
-# Electron-Forge
-out/
+# Build output
+build/
 
 # Editor folders
 .vscode

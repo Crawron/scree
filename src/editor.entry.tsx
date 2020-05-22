@@ -1,12 +1,13 @@
-import "./hotkeys"
-
-import React, { useState, useRef, useEffect } from "react"
+import { ipcRenderer, remote } from "electron"
+import React, { useEffect, useRef, useState } from "react"
 import ReactDOM from "react-dom"
+import "./hotkeys"
+import "./index.css"
 
-import { remote, ipcRenderer } from "electron"
+
+
 const { dialog } = remote
 
-import "./index.css"
 
 const App = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -39,9 +40,3 @@ const App = () => {
 }
 
 ReactDOM.render(<App />, document.getElementById("app"))
-
-if (module.hot) {
-  module.hot.accept(() => {
-    location.reload()
-  })
-}
