@@ -31,7 +31,7 @@ const App = () => {
         ref={fileInputRef}
       />
       <button onClick={selectImage}>Load Image</button>
-      {canvas ? canvas : ""}
+      {canvas}
     </>
   )
 }
