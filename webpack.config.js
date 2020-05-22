@@ -2,6 +2,7 @@ const merge = require("webpack-merge")
 
 /** @type {import('webpack').Configuration} */
 const baseConfig = {
+  mode: "development",
   output: {
     path: `${__dirname}/build`,
   },
