@@ -6,7 +6,7 @@
   "main": ".webpack/main",
   "scripts": {
     "dev": "",
-    "build": "parcel build src/main.ts src/editor/view.html src/captureDialog/view.html --out-dir build --target electron",
+    "build": "parcel build src/main.ts src/editor/view.html src/captureDialog/view.html --out-dir build --target electron --public-url=./",
     "start": "electron build/main.js",
     "lint": "eslint --ext js,ts,tsx .",
     "format": "prettier --write .",
