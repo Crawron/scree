@@ -49,7 +49,7 @@
               "entryPoints": [
                 {
                   "html": "./src/index.html",
-                  "js": "./src/renderer.ts",
+                  "js": "./src/renderer.tsx",
                   "name": "main_window"
                 }
               ]
@@ -67,6 +67,8 @@
     "@electron-forge/maker-zip": "6.0.0-beta.51",
     "@electron-forge/plugin-webpack": "6.0.0-beta.51",
     "@marshallofsound/webpack-asset-relocator-loader": "^0.5.0",
+    "@types/react": "^16.9.35",
+    "@types/react-dom": "^16.9.8",
     "@types/webpack-env": "1.15.2",
     "@typescript-eslint/eslint-plugin": "^2.34.0",
     "@typescript-eslint/parser": "^2.34.0",
@@ -83,6 +85,9 @@
     "typescript": "^3.9.3"
   },
   "dependencies": {
-    "electron-squirrel-startup": "1.0.0"
+    "electron-squirrel-startup": "1.0.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "sharp": "^0.25.3"
   }
 }

@@ -6,8 +6,10 @@
     "esModuleInterop": true,
     "noImplicitAny": true,
     "sourceMap": true,
+    "strict": true,
     "baseUrl": ".",
     "outDir": "dist",
+    "jsx": "react",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "paths": {
