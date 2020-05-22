@@ -1,12 +1,12 @@
-import "./index.css"
-import React, { useRef, useEffect, createElement } from "react"
 import { remote } from "electron"
-const { dialog } = remote
+import React, { useRef } from "react"
 import ReactDOM from "react-dom"
+import "./index.css"
+const { dialog } = remote
 
 const App = () => {
   const fileInputRef = useRef<HTMLInputElement>(null)
-  let canvas: HTMLCanvasElement | null = null
+  const canvas: HTMLCanvasElement | null = null
 
   async function selectImage() {
     console.log("loading image...")
@@ -38,6 +38,8 @@ const App = () => {
 
 ReactDOM.render(<App />, document.getElementById("app"))
 
-module.hot!.accept(() => {
-  location.reload()
-})
+if (module.hot) {
+  module.hot.accept(() => {
+    location.reload()
+  })
+}
