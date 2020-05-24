@@ -6,6 +6,12 @@ import Sharp from "sharp"
 export async function loadImage(event: Electron.IpcMainEvent) {
   const dialogResult = dialog.showOpenDialogSync({
     properties: ["openFile"],
+    filters: [
+      {
+        name: "Image",
+        extensions: ["png", "tiff", "jpeg", "jpg", "webp", "gif", "svg"],
+      },
+    ],
   })
 
   if (!dialogResult) return
