@@ -1,8 +1,34 @@
 import * as datefns from "date-fns"
 import { desktopCapturer, remote, Size } from "electron"
-import { promises as fs } from "fs"
 import { join } from "path"
+import sharp from "sharp"
 import { getErrorMessage } from "./getErrorMessage"
+
+function createCombinedScreenshot(
+  totalWidth: number,
+  maxHeight: number,
+  sources: Electron.DesktopCapturerSource[],
+) {
+  let fullImage = sharp({
+    create: {
+      width: totalWidth,
+      height: maxHeight,
+      background: "transparent",
+      channels: 4,
+    },
+  })
+
+  let left = 0
+
+  for (const { thumbnail } of sources) {
+    fullImage = fullImage.composite([
+      { input: thumbnail.toPNG(), top: 0, left },
+    ])
+    left += thumbnail.getSize().width
+  }
+
+  return fullImage
+}
 
 export async function captureFullScreen() {
   try {
@@ -19,17 +45,22 @@ export async function captureFullScreen() {
       thumbnailSize,
     })
 
-    const outputFolder = join(remote.app.getPath("pictures"), "Screenshots")
-    await fs.mkdir(outputFolder, { recursive: true })
+    const sizes = sources.map((s) => s.thumbnail.getSize())
 
-    await Promise.all(
-      sources.map(async (source) => {
-        const basename = datefns.format(new Date(), "yyyy-MM-dd-HH-mm-ss")
-        const filename = `${basename}.png`
-        const outputPath = join(outputFolder, filename)
-        await fs.writeFile(outputPath, source.thumbnail.toPNG())
-      }),
+    const totalWidth = sizes.reduce((width, size) => width + size.width, 0)
+    const maxHeight = Math.max(...sizes.map((s) => s.height))
+
+    const fullImage = createCombinedScreenshot(totalWidth, maxHeight, sources)
+
+    const outputBasename = datefns.format(new Date(), "yyyy-MM-dd-HH-mm-ss")
+
+    const outputPath = join(
+      remote.app.getPath("pictures"),
+      "Screenshots",
+      `${outputBasename}.png`,
     )
+
+    await fullImage.toFile(outputPath)
   } catch (error) {
     remote.dialog.showErrorBox(
       "Could not capture screenshot",
