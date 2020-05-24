@@ -2,7 +2,7 @@ import { ipcRenderer } from "electron"
 import React, { useEffect, useRef, useState } from "react"
 import ReactDOM from "react-dom"
 import "./hotkeys"
-import { loadImage } from "./renderer/loadImage"
+import { loadImage } from "./loadImage"
 
 const App = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
