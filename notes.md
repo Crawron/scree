@@ -12,6 +12,7 @@
 
 - [ ] Make IPC Great for once
 - [ ] Layer System
+- [ ] Canvas API abstraction
 
 ## Thoughts
 
