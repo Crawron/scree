@@ -1,8 +1,15 @@
-import Electron, { dialog } from "electron"
+import { dialog } from "electron"
 import { promises as fs } from "fs"
 import Sharp from "sharp"
 
-export async function loadImageFromFileDialog(event: Electron.IpcMainEvent) {
+export type LoadImageResult = {
+  url: string
+  dimensions: [number, number]
+}
+
+export async function loadImageFromFileDialog(): Promise<
+  LoadImageResult | undefined
+> {
   const dialogResult = dialog.showOpenDialogSync({
     properties: ["openFile"],
     filters: [
@@ -18,8 +25,8 @@ export async function loadImageFromFileDialog(event: Electron.IpcMainEvent) {
   const data = await fs.readFile(dialogResult[0])
   const { width, height, format } = await Sharp(data).metadata()
 
-  event.reply("loadImageDone", {
+  return {
     url: `data:image/${format};base64,${data.toString("base64")}`,
-    dimensions: [width, height],
-  })
+    dimensions: [width ?? 0, height ?? 0],
+  }
 }

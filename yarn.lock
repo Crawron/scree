@@ -1712,6 +1712,13 @@ ee-first@1.1.1:
   resolved "https://registry.yarnpkg.com/ee-first/-/ee-first-1.1.1.tgz#590c61156b0ae2f4f0255732a158b266bc56b21d"
   integrity sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=
 
+electron-typesafe-ipc@0.0.17:
+  version "0.0.17"
+  resolved "https://registry.yarnpkg.com/electron-typesafe-ipc/-/electron-typesafe-ipc-0.0.17.tgz#197a32a130b90d6d0a21da22d1b4f70673c93807"
+  integrity sha512-rxR3nNnGckl4jhrOunRZtdsolBFBjTRSCQO5dnK72eg5dAru+nITzAkURIKjdYtRaiYBHT+Op5tOVOp2A/VM8Q==
+  dependencies:
+    source-map-support "^0.5.10"
+
 electron@9.0.0:
   version "9.0.0"
   resolved "https://registry.yarnpkg.com/electron/-/electron-9.0.0.tgz#335cd426a8a542ad8d4c96c0c40a8668ab5527b8"
@@ -5079,7 +5086,7 @@ source-map-resolve@^0.5.0:
     source-map-url "^0.4.0"
     urix "^0.1.0"
 
-source-map-support@~0.5.12:
+source-map-support@^0.5.10, source-map-support@~0.5.12:
   version "0.5.19"
   resolved "https://registry.yarnpkg.com/source-map-support/-/source-map-support-0.5.19.tgz#a98b62f86dcaf4f67399648c085291ab9e8fed61"
   integrity sha512-Wonm7zOCIJzBGQdB+thsPar0kYuCIzYvxZwlBa87yi/Mdjv7Tip2cyVbLj5o0cFPN4EVkuTwb3GDDyUx2DGnGw==

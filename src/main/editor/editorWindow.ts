@@ -28,3 +28,7 @@ export function createEditorWindow() {
 export function showEditorWindow() {
   editorWindow?.show()
 }
+
+export function getEditorWindow() {
+  return editorWindow
+}
