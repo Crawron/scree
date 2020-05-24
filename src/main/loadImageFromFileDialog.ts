@@ -19,7 +19,7 @@ export async function loadImageFromFileDialog(event: Electron.IpcMainEvent) {
   const { width, height, format } = await Sharp(data).metadata()
 
   event.reply("loadImageDone", {
-    dataUrl: `data:image/${format};base64,${data.toString("base64")}`,
+    url: `data:image/${format};base64,${data.toString("base64")}`,
     dimensions: [width, height],
   })
 }
