@@ -1,6 +1,7 @@
-import { ipcRenderer, remote } from "electron"
+import { remote, ipcRenderer } from "electron"
 import React, { useEffect, useRef, useState } from "react"
 import ReactDOM from "react-dom"
+import Sharp from "sharp"
 import "./hotkeys"
 
 const { dialog } = remote
@@ -8,15 +9,31 @@ const { dialog } = remote
 const App = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [path, setPath] = useState<string>("")
+  const [data, setData] = useState<{
+    dataUrl: string
+    dimensions: [number, number]
+  }>()
 
   useEffect(() => {
     if (!path) return
-    ipcRenderer.emit("open-image", path)
-    ipcRenderer.on("loaded-image", (event, bitmap: ImageBitmap) => {
-      const canvasCtx = canvasRef.current?.getContext("2d")
-      canvasCtx?.drawImage(bitmap, 0, 0)
-    })
+    ipcRenderer.on("loadImageDone", (_, data) => setData(data))
+    ipcRenderer.send("loadImage", path)
   }, [path])
+
+  useEffect(() => {
+    if (!data) return
+
+    const [width, height] = data.dimensions
+
+    const image = new Image(width, height)
+    image.src = data.dataUrl
+
+    canvasRef.current && (canvasRef.current.width = width)
+    canvasRef.current && (canvasRef.current.height = height)
+
+    const context = canvasRef.current?.getContext("2d")
+    context?.drawImage(image, 0, 0)
+  }, [data])
 
   async function selectImage() {
     const dialogResult = await dialog.showOpenDialog({
@@ -28,7 +45,7 @@ const App = () => {
 
   return (
     <>
-      {path ? <canvas ref={canvasRef}></canvas> : ""}
+      <canvas ref={canvasRef}></canvas>
       <br />
       <button onClick={selectImage}>Load Image</button>
     </>

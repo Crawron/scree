@@ -1,6 +1,7 @@
 import { app, BrowserWindow, ipcMain } from "electron"
-import { loadImage } from "./helpers/loadImage"
 import { reloadOnChanges } from "./helpers/reloadOnChanges"
+import Sharp from "sharp"
+import { readFileSync } from "fs"
 
 const isDev = process.argv.includes("--dev")
 
@@ -38,9 +39,12 @@ app.on("ready", () => {
   showEditorWindow()
 })
 
-ipcMain.on("open-image", async (event, path) => {
-  if (typeof path !== "string") return
+ipcMain.on("loadImage", async (event, path) => {
+  const data = readFileSync(path)
+  const { width, height, format } = await Sharp(data).metadata()
 
-  const bitmap = await loadImage(path)
-  if (bitmap) event.reply("loaded-image", bitmap)
+  event.reply("loadImageDone", {
+    dataUrl: `data:image/${format};base64,${data.toString("base64")}`,
+    dimensions: [width, height],
+  })
 })
