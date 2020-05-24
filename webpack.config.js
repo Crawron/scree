@@ -29,7 +29,9 @@ module.exports = [
     target: "electron-main",
   }),
   merge(baseConfig, {
-    entry: "./src/editor.entry",
+    entry: {
+      editor: "./src/editor.entry",
+    },
     output: { filename: "editor.js" },
     target: "electron-renderer",
   }),
