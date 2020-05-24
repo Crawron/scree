@@ -1,4 +1,6 @@
 import { BrowserWindow } from "electron"
+import { isDev } from "../constants"
+import { reloadOnChanges } from "../reloadOnChanges"
 
 let win: BrowserWindow | undefined
 
@@ -8,7 +10,11 @@ export async function createCaptureWindow() {
     webPreferences: { nodeIntegration: true, webSecurity: false },
   })
   win.loadFile(`../assets/capture.html`).catch(console.error)
-  win.webContents.openDevTools()
+
+  if (isDev) {
+    // win.webContents.openDevTools()
+    reloadOnChanges(win)
+  }
 }
 
 export async function sendCaptureEvent() {

@@ -1,7 +1,7 @@
 import { app, ipcMain } from "electron"
-import { createCaptureWindow } from "./capture/window"
+import { createCaptureWindow } from "./capture/captureWindow"
+import { createEditorWindow } from "./editor/editorWindow"
 import { loadImageFromFileDialog } from "./editor/loadImageFromFileDialog"
-import { createEditorWindow } from "./editor/window"
 import { registerHotkeys } from "./hotkeys"
 
 app.on("ready", () => {

@@ -1,5 +1,5 @@
 import { globalShortcut } from "electron"
-import { sendCaptureEvent } from "./capture/window"
+import { sendCaptureEvent } from "./capture/captureWindow"
 
 export function registerHotkeys() {
   globalShortcut.register("PrintScreen", () => {

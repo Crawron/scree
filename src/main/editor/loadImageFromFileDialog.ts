@@ -1,5 +1,5 @@
 import Electron, { dialog } from "electron"
-import { readFileSync } from "fs"
+import { promises as fs } from "fs"
 import Sharp from "sharp"
 
 export async function loadImageFromFileDialog(event: Electron.IpcMainEvent) {
@@ -15,7 +15,7 @@ export async function loadImageFromFileDialog(event: Electron.IpcMainEvent) {
 
   if (!dialogResult) return
 
-  const data = readFileSync(dialogResult[0])
+  const data = await fs.readFile(dialogResult[0])
   const { width, height, format } = await Sharp(data).metadata()
 
   event.reply("loadImageDone", {
