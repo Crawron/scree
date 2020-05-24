@@ -20,6 +20,9 @@ const baseConfig = {
     // https://webpack.js.org/configuration/externals/#externals
     sharp: "commonjs2 sharp",
   },
+  optimization: {
+    splitChunks: "all",
+  },
 }
 
 module.exports = [
