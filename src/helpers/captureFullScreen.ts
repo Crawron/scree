@@ -29,10 +29,14 @@ async function createCombinedScreenshot(
 
   return new Promise<Buffer>((resolve, reject) => {
     canvas.toBlob((blob) => {
-      if (blob) {
-        resolve(Buffer.from(blob))
-      } else {
-        reject("Failed to create blob")
+      try {
+        if (blob) {
+          resolve(Buffer.from(blob))
+        } else {
+          reject("Failed to create blob")
+        }
+      } catch (error) {
+        reject(error)
       }
     })
   })
