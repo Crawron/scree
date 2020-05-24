@@ -3,7 +3,7 @@ import { desktopCapturer, remote, Size } from "electron"
 import { join } from "path"
 import sharp from "sharp"
 import { createBufferFromCanvas } from "./createBufferFromCanvas"
-import { getErrorMessage } from "./getErrorMessage"
+import { getErrorMessage } from "../common/getErrorMessage"
 import { loadImage } from "./loadImage"
 
 export async function captureFullScreen() {

@@ -1,6 +1,6 @@
 import { app, BrowserWindow, ipcMain } from "electron"
-import { loadImageFromFileDialog } from "./helpers/loadImageFromFileDialog"
-import { reloadOnChanges } from "./helpers/reloadOnChanges"
+import { loadImageFromFileDialog } from "./main/loadImageFromFileDialog"
+import { reloadOnChanges } from "./main/reloadOnChanges"
 
 const isDev = process.argv.includes("--dev")
 
