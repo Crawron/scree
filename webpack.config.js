@@ -1,13 +1,21 @@
 // @ts-check
 const merge = require("webpack-merge")
+const path = require("path")
 
 /** @type {import('webpack').Configuration} */
 const baseConfig = {
   output: {
-    path: `${__dirname}/build`,
+    path: path.join(__dirname, "build"),
+    publicPath: ".",
   },
   module: {
-    rules: [{ test: /\.(js|ts)x?$/, use: "babel-loader" }],
+    rules: [
+      {
+        test: /\.(js|ts)x?$/,
+        use: "babel-loader",
+        include: path.join(__dirname, "src"),
+      },
+    ],
   },
   resolve: {
     extensions: [".ts", ".tsx", ".js"],
@@ -21,11 +29,14 @@ const baseConfig = {
     // https://webpack.js.org/configuration/externals/#externals
     sharp: "commonjs2 sharp",
   },
-  optimization: {
-    splitChunks: {
-      chunks: "all",
-    },
-  },
+
+  // this doesn't work with electron :(
+  // figure it out later
+  // optimization: {
+  //   splitChunks: {
+  //     chunks: "all",
+  //   },
+  // },
 }
 
 module.exports = [

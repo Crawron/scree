@@ -1,6 +1,6 @@
 import { app, ipcMain } from "electron"
 import { createCaptureWindow } from "./capture/captureWindow"
-import { createEditorWindow } from "./editor/editorWindow"
+import { createEditorWindow, showEditorWindow } from "./editor/editorWindow"
 import { loadImageFromFileDialog } from "./editor/loadImageFromFileDialog"
 import { registerHotkeys } from "./hotkeys"
 
@@ -11,7 +11,7 @@ app.on("ready", () => {
 
   // show at startup for debugging
   // later this would be triggered by something else, probably post capture
-  // showEditorWindow()
+  showEditorWindow()
 })
 
 ipcMain.on("loadImage", loadImageFromFileDialog)

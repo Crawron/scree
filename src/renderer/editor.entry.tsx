@@ -1,6 +1,8 @@
+import {} from "@emotion/react"
 import { ipcRenderer } from "electron"
 import React, { useEffect, useRef, useState } from "react"
 import ReactDOM from "react-dom"
+import tw from "twin.macro"
 import { loadImage } from "./loadImage"
 
 const App = () => {
@@ -36,7 +38,12 @@ const App = () => {
   return (
     <>
       <canvas ref={canvasRef}></canvas> <br />
-      <button onClick={sendIpcLoadImage}>Load Image</button>
+      <button
+        onClick={sendIpcLoadImage}
+        css={tw`bg-blue-500 text-white p-2 rounded-sm shadow-lg hover:bg-blue-400 transition-colors duration-300`}
+      >
+        Load Image
+      </button>
     </>
   )
 }

@@ -11,7 +11,8 @@
     "outDir": "dist",
     "jsx": "react",
     "moduleResolution": "node",
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "plugins": [{ "name": "typescript-plugin-tw-template" }]
   },
   "include": ["src/**/*"]
 }
