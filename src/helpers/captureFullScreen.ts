@@ -2,45 +2,9 @@ import * as datefns from "date-fns"
 import { desktopCapturer, remote, Size } from "electron"
 import { join } from "path"
 import sharp from "sharp"
+import { createBufferFromCanvas } from "./createBufferFromCanvas"
 import { getErrorMessage } from "./getErrorMessage"
 import { loadImage } from "./loadImage"
-
-async function createCombinedScreenshot(
-  sources: Electron.DesktopCapturerSource[],
-) {
-  const sizes = sources.map((s) => s.thumbnail.getSize())
-
-  const totalWidth = sizes.reduce((width, size) => width + size.width, 0)
-  const maxHeight = Math.max(...sizes.map((s) => s.height))
-
-  const canvas = document.createElement("canvas")
-  canvas.width = totalWidth
-  canvas.height = maxHeight
-
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const context = canvas.getContext("2d")!
-  let left = 0
-
-  for (const { thumbnail } of sources) {
-    const image = await loadImage(thumbnail.toDataURL())
-    context.drawImage(image, left, 0)
-    left += thumbnail.getSize().width
-  }
-
-  return new Promise<Buffer>((resolve, reject) => {
-    canvas.toBlob(async (blob) => {
-      try {
-        if (blob) {
-          resolve(Buffer.from(await blob.arrayBuffer()))
-        } else {
-          reject("Failed to create blob")
-        }
-      } catch (error) {
-        reject(error)
-      }
-    })
-  })
-}
 
 export async function captureFullScreen() {
   try {
@@ -76,4 +40,29 @@ export async function captureFullScreen() {
       getErrorMessage(error),
     )
   }
+}
+
+async function createCombinedScreenshot(
+  sources: Electron.DesktopCapturerSource[],
+) {
+  const sizes = sources.map((s) => s.thumbnail.getSize())
+
+  const totalWidth = sizes.reduce((width, size) => width + size.width, 0)
+  const maxHeight = Math.max(...sizes.map((s) => s.height))
+
+  const canvas = document.createElement("canvas")
+  canvas.width = totalWidth
+  canvas.height = maxHeight
+
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const context = canvas.getContext("2d")!
+  let left = 0
+
+  for (const { thumbnail } of sources) {
+    const image = await loadImage(thumbnail.toDataURL())
+    context.drawImage(image, left, 0)
+    left += thumbnail.getSize().width
+  }
+
+  return createBufferFromCanvas(canvas)
 }
