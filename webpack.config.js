@@ -1,3 +1,4 @@
+// @ts-check
 const merge = require("webpack-merge")
 
 /** @type {import('webpack').Configuration} */
@@ -6,7 +7,7 @@ const baseConfig = {
     path: `${__dirname}/build`,
   },
   module: {
-    rules: [{ test: /\.tsx?$/, use: "ts-loader" }],
+    rules: [{ test: /\.(js|ts)x?$/, use: "babel-loader" }],
   },
   resolve: {
     extensions: [".ts", ".tsx", ".js"],
@@ -21,7 +22,9 @@ const baseConfig = {
     sharp: "commonjs2 sharp",
   },
   optimization: {
-    splitChunks: "all",
+    splitChunks: {
+      chunks: "all",
+    },
   },
 }
 
