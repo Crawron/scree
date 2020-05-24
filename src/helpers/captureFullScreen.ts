@@ -3,31 +3,39 @@ import { desktopCapturer, remote, Size } from "electron"
 import { join } from "path"
 import sharp from "sharp"
 import { getErrorMessage } from "./getErrorMessage"
+import { loadImage } from "./loadImage"
 
-function createCombinedScreenshot(
-  totalWidth: number,
-  maxHeight: number,
+async function createCombinedScreenshot(
   sources: Electron.DesktopCapturerSource[],
 ) {
-  let fullImage = sharp({
-    create: {
-      width: totalWidth,
-      height: maxHeight,
-      background: "transparent",
-      channels: 4,
-    },
-  })
+  const sizes = sources.map((s) => s.thumbnail.getSize())
 
+  const totalWidth = sizes.reduce((width, size) => width + size.width, 0)
+  const maxHeight = Math.max(...sizes.map((s) => s.height))
+
+  const canvas = document.createElement("canvas")
+  canvas.width = totalWidth
+  canvas.height = maxHeight
+
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const context = canvas.getContext("2d")!
   let left = 0
 
   for (const { thumbnail } of sources) {
-    fullImage = fullImage.composite([
-      { input: thumbnail.toPNG(), top: 0, left },
-    ])
+    const image = await loadImage(thumbnail.toDataURL())
+    context.drawImage(image, left, 0)
     left += thumbnail.getSize().width
   }
 
-  return fullImage
+  return new Promise<Buffer>((resolve, reject) => {
+    canvas.toBlob((blob) => {
+      if (blob) {
+        resolve(Buffer.from(blob))
+      } else {
+        reject("Failed to create blob")
+      }
+    })
+  })
 }
 
 export async function captureFullScreen() {
@@ -45,12 +53,7 @@ export async function captureFullScreen() {
       thumbnailSize,
     })
 
-    const sizes = sources.map((s) => s.thumbnail.getSize())
-
-    const totalWidth = sizes.reduce((width, size) => width + size.width, 0)
-    const maxHeight = Math.max(...sizes.map((s) => s.height))
-
-    const fullImage = createCombinedScreenshot(totalWidth, maxHeight, sources)
+    const fullImage = await createCombinedScreenshot(sources)
 
     const outputBasename = datefns.format(new Date(), "yyyy-MM-dd-HH-mm-ss")
 
@@ -60,7 +63,9 @@ export async function captureFullScreen() {
       `${outputBasename}.png`,
     )
 
-    await fullImage.toFile(outputPath)
+    // do we even need sharp here lol
+    const output = await sharp(fullImage).toFile(outputPath)
+    console.log(output)
   } catch (error) {
     remote.dialog.showErrorBox(
       "Could not capture screenshot",

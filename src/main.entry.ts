@@ -1,6 +1,6 @@
 import { app, BrowserWindow, ipcMain } from "electron"
+import { loadImageFromFileDialog } from "./helpers/loadImageFromFileDialog"
 import { reloadOnChanges } from "./helpers/reloadOnChanges"
-import { loadImage } from "./helpers/loadImage"
 
 const isDev = process.argv.includes("--dev")
 
@@ -38,4 +38,4 @@ app.on("ready", () => {
   showEditorWindow()
 })
 
-ipcMain.on("loadImage", loadImage)
+ipcMain.on("loadImage", loadImageFromFileDialog)
