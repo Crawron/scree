@@ -2,11 +2,16 @@
 
 ## The basics
 
-- [ ] Image loading
+- [x] Image loading
 - [ ] Image saving
   - [ ] Saving to file
   - [ ] Copy to clipboard
 - [ ] Image cropping
+
+## Todo
+
+- [ ] Make IPC Great for once
+- [ ] Layer System
 
 ## Thoughts
 

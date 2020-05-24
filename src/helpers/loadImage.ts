@@ -1,8 +1,20 @@
-import { promises } from "fs"
-const { readFile } = promises
+import { readFileSync } from "fs"
+import Electron, { dialog } from "electron"
 
-export async function loadImage(path: string) {
-  const buffer = await readFile(path)
-  const blob = new Blob([new Uint8Array(buffer)])
-  return blob
+import Sharp from "sharp"
+
+export async function loadImage(event: Electron.IpcMainEvent) {
+  const dialogResult = dialog.showOpenDialogSync({
+    properties: ["openFile"],
+  })
+
+  if (!dialogResult) return
+
+  const data = readFileSync(dialogResult[0])
+  const { width, height, format } = await Sharp(data).metadata()
+
+  event.reply("loadImageDone", {
+    dataUrl: `data:image/${format};base64,${data.toString("base64")}`,
+    dimensions: [width, height],
+  })
 }
