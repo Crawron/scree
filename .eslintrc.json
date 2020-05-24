@@ -4,11 +4,12 @@
     "es6": true,
     "node": true
   },
-  "plugins": ["react"],
+  "plugins": ["react", "react-hooks"],
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
+    "plugin:react-hooks/recommended",
     "prettier"
   ],
   "parser": "@typescript-eslint/parser",
@@ -17,8 +18,10 @@
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/member-delimiter-style": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
     "react/jsx-key": "warn",
     "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error"
-  }
+  },
+  "ignorePatterns": ["build/**/*", "node_modules/**/*"]
 }
