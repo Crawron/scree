@@ -15,8 +15,7 @@ const App = () => {
 
   useEffect(() => {
     if (!path) return
-    ipcRenderer.on("loadImageDone", (_, data) => setData(data))
-    ipcRenderer.send("loadImage", path)
+    setData(ipcRenderer.sendSync("loadImage", path))
   }, [path])
 
   useEffect(() => {
@@ -25,13 +24,13 @@ const App = () => {
     const [width, height] = data.dimensions
 
     const image = new Image(width, height)
+    image.onload = () =>
+      canvasRef.current?.getContext("2d")?.drawImage(image, 0, 0)
+
     image.src = data.dataUrl
 
     canvasRef.current && (canvasRef.current.width = width)
     canvasRef.current && (canvasRef.current.height = height)
-
-    const context = canvasRef.current?.getContext("2d")
-    context?.drawImage(image, 0, 0)
   }, [data])
 
   async function selectImage() {

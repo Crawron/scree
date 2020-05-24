@@ -43,8 +43,8 @@ ipcMain.on("loadImage", async (event, path) => {
   const data = readFileSync(path)
   const { width, height, format } = await Sharp(data).metadata()
 
-  event.reply("loadImageDone", {
+  event.returnValue = {
     dataUrl: `data:image/${format};base64,${data.toString("base64")}`,
     dimensions: [width, height],
-  })
+  }
 })
