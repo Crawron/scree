@@ -2,9 +2,9 @@ import * as datefns from "date-fns"
 import { desktopCapturer, remote, Size } from "electron"
 import { join } from "path"
 import sharp from "sharp"
-import { createBufferFromCanvas } from "./createBufferFromCanvas"
-import { getErrorMessage } from "../common/getErrorMessage"
-import { loadImage } from "./loadImage"
+import { getErrorMessage } from "../../common/getErrorMessage"
+import { createBufferFromCanvas } from "../createBufferFromCanvas"
+import { loadImage } from "../loadImage"
 
 export async function captureFullScreen() {
   try {
@@ -32,8 +32,7 @@ export async function captureFullScreen() {
     )
 
     // do we even need sharp here lol
-    const output = await sharp(fullImage).toFile(outputPath)
-    console.log(output)
+    await sharp(fullImage).toFile(outputPath)
   } catch (error) {
     remote.dialog.showErrorBox(
       "Could not capture screenshot",

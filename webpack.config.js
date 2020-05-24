@@ -24,15 +24,16 @@ const baseConfig = {
 
 module.exports = [
   merge(baseConfig, {
-    entry: "./src/main.entry",
+    entry: "./src/main/main.entry",
     output: { filename: "main.js" },
     target: "electron-main",
   }),
   merge(baseConfig, {
     entry: {
-      editor: "./src/editor.entry",
+      editor: "./src/renderer/editor.entry",
+      capture: "./src/renderer/capture/capture.entry",
     },
-    output: { filename: "editor.js" },
+    output: { filename: "[name].js" },
     target: "electron-renderer",
   }),
 ]

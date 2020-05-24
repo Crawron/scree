@@ -20,7 +20,7 @@ export function createEditorWindow() {
   })
 
   if (isDev) {
-    win.webContents.openDevTools()
+    // win.webContents.openDevTools()
     reloadOnChanges(win)
   }
 }
