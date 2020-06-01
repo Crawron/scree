@@ -7,7 +7,6 @@ export type ShapeStyle = {
   // corner and cap shape pending
 }
 
-// for now just a tuple, but will make a proper Vector2 class later
 export class Vector2 {
   constructor(public x: number, public y: number) {}
 
@@ -15,7 +14,7 @@ export class Vector2 {
     return [this.x, this.y]
   }
 }
-export const vec2 = (x = 0, y?: number): Vector2 => new Vector2(x, y ?? x)
+export const vec2 = (x = 0, y = x): Vector2 => new Vector2(x, y)
 // imagine i made this `(x?: number, y?: number) => [x ?? 0, y ?? x ?? 0]`
 
 export type Transform = {
