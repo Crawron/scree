@@ -38,7 +38,7 @@ export class Canvas {
   }
 
   /** applies position and rotation only, not dimensions.*/
-  applyContext = (transform: Transform, style: ShapeStyle) => {
+  private applyContext = (transform: Transform, style: ShapeStyle) => {
     const { context } = this
 
     context.rotate(transform.rotation)
