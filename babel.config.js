@@ -5,5 +5,5 @@ module.exports = {
     "@babel/react",
     "@emotion/css-prop",
   ],
-  plugins: ["macros"],
+  plugins: ["macros", "@babel/proposal-class-properties"],
 }
