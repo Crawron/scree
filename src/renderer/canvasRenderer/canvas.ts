@@ -13,18 +13,21 @@ export class Canvas {
   private element: HTMLCanvasElement
   private context: CanvasRenderingContext2D
 
-  constructor() {
+  constructor(size?: Vector2) {
     this.element = document.createElement("canvas")
+
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     this.context = this.element.getContext("2d")!
 
     // saving a clean context to restore before every draw
     this.context.save()
+
+    if (size) this.size = size
   }
 
-  set size({ x, y }: Vector2) {
-    this.element.width = x
-    this.element.height = y
+  set size({ x: width, y: height }: Vector2) {
+    this.element.width = width
+    this.element.height = height
   }
 
   // cause why not
@@ -32,7 +35,7 @@ export class Canvas {
     return vec2(this.element.width, this.element.height)
   }
 
-  get buffer(): Promise<Buffer> {
+  get buffer() {
     // may need to just move this function's code in here
     return createBufferFromCanvas(this.element)
   }
