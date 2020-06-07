@@ -14,4 +14,6 @@ app.on("ready", () => {
   showEditorWindow()
 })
 
-ipcMain.on("loadImage", loadImageFromFileDialog)
+ipcMain.on("loadImage", async (event) => {
+  event.reply("loadImageDone", await loadImageFromFileDialog())
+})

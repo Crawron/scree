@@ -1,10 +1,12 @@
-import Electron, { dialog } from "electron"
+import { dialog } from "electron"
 import { promises as fs } from "fs"
 import { ImageBuffer } from "../../common/ImageBuffer"
-import { getImageMetadata } from "../getImageMetadata"
 import { supportedFormats } from "../../common/SupportedFormat"
+import { getImageMetadata } from "../getImageMetadata"
 
-export async function loadImageFromFileDialog(event: Electron.IpcMainEvent) {
+export async function loadImageFromFileDialog(): Promise<
+  ImageBuffer | undefined
+> {
   const dialogResult = dialog.showOpenDialogSync({
     properties: ["openFile"],
     filters: [
@@ -18,10 +20,5 @@ export async function loadImageFromFileDialog(event: Electron.IpcMainEvent) {
   if (!dialogResult) return
 
   const fileData = await fs.readFile(dialogResult[0])
-  const imageBuffer = new ImageBuffer(
-    await getImageMetadata(fileData),
-    fileData,
-  )
-
-  event.reply("loadImageDone", imageBuffer)
+  return new ImageBuffer(await getImageMetadata(fileData), fileData)
 }
