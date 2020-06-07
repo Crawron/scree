@@ -1,6 +1,8 @@
 import Electron, { dialog } from "electron"
 import { promises as fs } from "fs"
-import Sharp from "sharp"
+import { ImageBuffer } from "../../common/ImageBuffer"
+import { getImageMetadata } from "../getImageMetadata"
+import { supportedFormats } from "../../common/SupportedFormat"
 
 export async function loadImageFromFileDialog(event: Electron.IpcMainEvent) {
   const dialogResult = dialog.showOpenDialogSync({
@@ -8,18 +10,18 @@ export async function loadImageFromFileDialog(event: Electron.IpcMainEvent) {
     filters: [
       {
         name: "Image",
-        extensions: ["png", "tiff", "jpeg", "jpg", "webp", "gif", "svg"],
+        extensions: [...supportedFormats],
       },
     ],
   })
 
   if (!dialogResult) return
 
-  const data = await fs.readFile(dialogResult[0])
-  const { width, height, format } = await Sharp(data).metadata()
+  const fileData = await fs.readFile(dialogResult[0])
+  const imageBuffer = new ImageBuffer(
+    await getImageMetadata(fileData),
+    fileData,
+  )
 
-  event.reply("loadImageDone", {
-    url: `data:image/${format};base64,${data.toString("base64")}`,
-    dimensions: [width, height],
-  })
+  event.reply("loadImageDone", imageBuffer)
 }
