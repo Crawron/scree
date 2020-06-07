@@ -6,7 +6,6 @@ export function createTrayIcon() {
     Menu.buildFromTemplate([
       {
         label: "Exit",
-        type: "normal",
         click: () => app.exit(),
       },
     ]),
