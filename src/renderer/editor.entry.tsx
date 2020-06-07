@@ -1,34 +1,29 @@
 import {} from "@emotion/react"
-import { ipcRenderer } from "electron"
 import React, { useEffect, useRef, useState } from "react"
 import ReactDOM from "react-dom"
 import tw from "twin.macro"
+import { ImageBuffer } from "../common/ImageBuffer"
+import { loadImageEvent } from "../common/ipcEvents"
 import { loadImage } from "./loadImage"
 
 const App = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const [data, setData] = useState<{
-    url: string
-    dimensions: [number, number]
-  }>()
+  const [data, setData] = useState<ImageBuffer>()
 
-  useEffect(() => {
-    ipcRenderer.on("loadImageDone", (_, data) => setData(data))
-  }, [])
-
-  function sendIpcLoadImage() {
-    ipcRenderer.send("loadImage")
+  async function sendIpcLoadImage() {
+    const data = await loadImageEvent.renderer.request({})
+    if (data) setData(data)
   }
 
   useEffect(() => {
     if (!data || !canvasRef.current) return
 
-    const [width, height] = data.dimensions
+    const { x: width, y: height } = data.metadata.size
 
     ;(async () => {
       canvasRef.current
         ?.getContext("2d")
-        ?.drawImage(await loadImage(data.url), 0, 0)
+        ?.drawImage(await loadImage(data.dataUrl), 0, 0)
     })()
 
     canvasRef.current.width = width
@@ -40,7 +35,7 @@ const App = () => {
       <canvas ref={canvasRef}></canvas> <br />
       <button
         onClick={sendIpcLoadImage}
-        css={tw`bg-blue-500 text-white p-2 rounded-sm shadow-lg hover:bg-blue-400 transition-colors duration-300`}
+        css={tw`p-2 text-white transition-colors duration-300 bg-blue-500 rounded-sm shadow-lg hover:bg-blue-400`}
       >
         Load Image
       </button>
