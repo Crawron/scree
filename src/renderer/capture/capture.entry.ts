@@ -1,6 +1,4 @@
-import { ipcRenderer } from "electron"
+import { captureFullScreenEvent } from "../../common/ipcEvents"
 import { captureFullScreen } from "./captureFullScreen"
 
-ipcRenderer.on("captureFullScreen", () => {
-  captureFullScreen()
-})
+captureFullScreenEvent.renderer.listen(captureFullScreen)

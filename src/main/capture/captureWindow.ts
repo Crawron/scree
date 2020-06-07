@@ -1,4 +1,5 @@
 import { BrowserWindow } from "electron"
+import { captureFullScreenEvent } from "../../common/ipcEvents"
 import { isDev } from "../constants"
 import { reloadOnChanges } from "../reloadOnChanges"
 
@@ -18,5 +19,7 @@ export async function createCaptureWindow() {
 }
 
 export async function sendCaptureEvent() {
-  win?.webContents.send("captureFullScreen")
+  if (win) {
+    captureFullScreenEvent.main.send(win.webContents, {})
+  }
 }
