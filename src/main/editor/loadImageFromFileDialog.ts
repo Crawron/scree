@@ -1,11 +1,11 @@
 import { dialog } from "electron"
 import { promises as fs } from "fs"
-import { ImageBuffer } from "../../common/ImageBuffer"
+import { createImageData, ImageBufferData } from "../../common/ImageBufferData"
 import { supportedFormats } from "../../common/SupportedFormat"
 import { getImageMetadata } from "../getImageMetadata"
 
 export async function loadImageFromFileDialog(): Promise<
-  ImageBuffer | undefined
+  ImageBufferData | undefined
 > {
   const dialogResult = dialog.showOpenDialogSync({
     properties: ["openFile"],
@@ -20,5 +20,5 @@ export async function loadImageFromFileDialog(): Promise<
   if (!dialogResult) return
 
   const fileData = await fs.readFile(dialogResult[0])
-  return new ImageBuffer(await getImageMetadata(fileData), fileData)
+  return createImageData(await getImageMetadata(fileData), fileData)
 }

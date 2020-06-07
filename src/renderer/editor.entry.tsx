@@ -4,11 +4,11 @@ import React, { useEffect, useRef, useState } from "react"
 import ReactDOM from "react-dom"
 import tw from "twin.macro"
 import { loadImage } from "./loadImage"
-import { ImageBuffer } from "../common/ImageBuffer"
+import { ImageBufferData } from "../common/ImageBufferData"
 
 const App = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const [data, setData] = useState<ImageBuffer>()
+  const [data, setData] = useState<ImageBufferData>()
 
   useEffect(() => {
     ipcRenderer.on("loadImageDone", (_, data) => setData(data))
@@ -19,10 +19,12 @@ const App = () => {
   }
 
   useEffect(() => {
+    console.log(data)
     if (!data || !canvasRef.current) return
 
     const { x: width, y: height } = data.metadata.size
 
+    console.log("cool", data.dataUrl)
     ;(async () => {
       canvasRef.current
         ?.getContext("2d")

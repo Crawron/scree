@@ -1,6 +1,6 @@
 import Sharp from "sharp"
 
-import { ImageMetadata } from "../common/ImageBuffer"
+import { ImageMetadata } from "../common/ImageBufferData"
 import { isSupportedFormat } from "../common/SupportedFormat"
 import { vec2 } from "../renderer/canvasRenderer/types"
 
