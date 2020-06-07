@@ -4,11 +4,14 @@ import { createCaptureWindow } from "./capture/captureWindow"
 import { createEditorWindow, showEditorWindow } from "./editor/editorWindow"
 import { loadImageFromFileDialog } from "./editor/loadImageFromFileDialog"
 import { registerHotkeys } from "./hotkeys"
+import { createTrayIcon } from "./createTrayIcon"
 
 app.on("ready", () => {
+  registerHotkeys()
+  createTrayIcon()
+
   createEditorWindow()
   createCaptureWindow()
-  registerHotkeys()
 
   // show at startup for debugging
   // later this would be triggered by something else, probably post capture
