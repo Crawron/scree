@@ -5,6 +5,7 @@ import tw from "twin.macro"
 import { ImageBuffer } from "../common/ImageBuffer"
 import { loadImageEvent } from "../common/ipcEvents"
 import { loadImage } from "./loadImage"
+import { ImageBuffer } from "../common/ImageBuffer"
 
 const App = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
