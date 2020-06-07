@@ -1,4 +1,5 @@
-import { app, ipcMain } from "electron"
+import { app } from "electron"
+import { loadImageEvent } from "../common/ipcEvents"
 import { createCaptureWindow } from "./capture/captureWindow"
 import { createEditorWindow, showEditorWindow } from "./editor/editorWindow"
 import { loadImageFromFileDialog } from "./editor/loadImageFromFileDialog"
@@ -14,6 +15,4 @@ app.on("ready", () => {
   showEditorWindow()
 })
 
-ipcMain.on("loadImage", async (event) => {
-  event.reply("loadImageDone", await loadImageFromFileDialog())
-})
+loadImageEvent.main.listen(loadImageFromFileDialog)
