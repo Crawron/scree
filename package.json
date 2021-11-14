@@ -1,6 +1,6 @@
 {
   "name": "scree",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "description": "",
   "repository": {
     "type": "git",
@@ -16,10 +16,16 @@
     "dev": "npm-run-all --parallel --print-label --race dev-*",
     "dev-electron": "nodemon --exec electron build/main.js",
     "dev-build": "pnpm build -- --watch",
-    "build": "esbuild src/main.ts --bundle --outdir=build --platform=node --external:electron"
+    "build": "esbuild src/main.ts --bundle --outdir=build --platform=node --external:electron --external:sharp"
+  },
+  "dependencies": {
+    "@ffmpeg-installer/ffmpeg": "1.1.0",
+    "execa": "5.1.1",
+    "sharp": "0.29.2"
   },
   "devDependencies": {
     "@types/node": "16.11.7",
+    "@types/sharp": "0.29.3",
     "electron": "15.3.1",
     "esbuild": "0.13.13",
     "nodemon": "2.0.15",
