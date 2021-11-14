@@ -19,6 +19,7 @@
     "build": "esbuild src/main.ts --bundle --outdir=build --platform=node --external:electron"
   },
   "devDependencies": {
+    "@types/node": "16.11.7",
     "electron": "15.3.1",
     "esbuild": "0.13.13",
     "nodemon": "2.0.15",
